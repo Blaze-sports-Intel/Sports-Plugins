@@ -1,0 +1,8 @@
+{
+  "sportscore": {
+    "type": "stdio",
+    "command": "npx",
+    "args": ["-y", "sportscore-mcp"],
+    "description": "SportScore MCP server via npm package for free live scores and standings"
+  }
+}

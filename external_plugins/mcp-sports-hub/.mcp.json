@@ -1,0 +1,11 @@
+{
+  "sports-hub": {
+    "type": "stdio",
+    "command": "npx",
+    "args": ["-y", "mcp-sports-hub"],
+    "description": "Unified MCP server with multi-provider sports coverage",
+    "env": {
+      "SPORTS_HUB_PROVIDERS": "free"
+    }
+  }
+}

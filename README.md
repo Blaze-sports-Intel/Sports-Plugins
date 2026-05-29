@@ -22,6 +22,9 @@ A curated marketplace of high-quality community sports plugins for [Claude Code]
 | Plugin | Description |
 |--------|-------------|
 | **[blaze-sports-intel](external_plugins/blaze-sports-intel/)** | [BSI](https://blazesportsintel.com) integration — college baseball box scores, Texas Longhorns intel, and advanced analytics via [blazesportsintel.com/mcp](https://blazesportsintel.com/mcp) |
+| **[sportscore-mcp](external_plugins/sportscore-mcp/)** | SportScore MCP integration — free live scores, standings, and player data across football, basketball, cricket, and tennis |
+| **[mcp-sports-hub](external_plugins/mcp-sports-hub/)** | Unified multi-provider sports MCP server — broad cross-sport coverage for scores, stats, odds, and college data |
+| **[yahoo-fantasy-baseball-mcp](external_plugins/yahoo-fantasy-baseball-mcp/)** | Yahoo Fantasy Baseball MCP integration — roster retrieval and fantasy workflow support via Yahoo API credentials |
 
 ## Installation
 

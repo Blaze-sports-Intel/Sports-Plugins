@@ -1,0 +1,11 @@
+{
+  "name": "mcp-sports-hub",
+  "description": "Unified Sports Hub MCP integration aggregating dozens of sports providers and hundreds of tools across scores, stats, odds, and college sports",
+  "version": "1.0.0",
+  "author": {
+    "name": "Lacause Crypto",
+    "url": "https://github.com/lacausecrypto"
+  },
+  "homepage": "https://www.npmjs.com/package/mcp-sports-hub",
+  "repository": "https://github.com/lacausecrypto/mcp-sports-hub"
+}

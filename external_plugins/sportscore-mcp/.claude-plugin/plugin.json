@@ -1,0 +1,11 @@
+{
+  "name": "sportscore-mcp",
+  "description": "SportScore MCP integration for live scores, match details, standings, top scorers, and player stats across football, basketball, cricket, and tennis",
+  "version": "1.0.0",
+  "author": {
+    "name": "SportScore",
+    "url": "https://sportscore.com"
+  },
+  "homepage": "https://sportscore.com/developers/",
+  "repository": "https://github.com/Backspace-me/sportscore-mcp"
+}
