@@ -91,7 +91,9 @@ export async function addScoutedPlayer(
 ): Promise<void> {
   const state = await getSessionState(env, sessionId);
   const scouted = new Set<string>(
-    Array.isArray(state?.data?.scouted) ? (state.data.scouted as string[]) : [],
+    Array.isArray(state?.data?.scouted)
+      ? (state.data.scouted as unknown[]).filter((id): id is string => typeof id === "string")
+      : [],
   );
   scouted.add(playerId);
   await saveSessionState(env, sessionId, { scouted: Array.from(scouted) });

@@ -7,7 +7,7 @@ description: Use when the task requires a head-to-head win probability estimate 
 
 Use this skill to answer questions like:
 
-- "Who is favoured in tonight's Texas vs TCU game?"
+- "Who is favored in tonight's Texas vs TCU game?"
 - "What is the projected win probability for this weekend's SEC series?"
 - "How does Oregon's pitching matchup against LSU's offense look on paper?"
 

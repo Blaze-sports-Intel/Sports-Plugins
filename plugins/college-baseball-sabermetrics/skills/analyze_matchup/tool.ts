@@ -142,7 +142,7 @@ export async function analyzeMatchup(
     //        bsiFetch('get_team_stats', { team_id: input.team1_id, date: input.date }),
     //        bsiFetch('get_team_stats', { team_id: input.team2_id, date: input.date }),
     //      ]);
-    const [team1, team2] = await Promise.all<TeamStats>([
+    const [team1, team2] = await Promise.all<[TeamStats, TeamStats]>([
       Promise.resolve({
         offense: {
           pa: 250, ab: 220, h: 72, doubles: 16, triples: 2, hr: 14,
