@@ -1,106 +1,44 @@
-# GitHub Copilot & AI Agent Instructions
+# AI Coding Assistant Instructions for Sports-Plugins Repository
 
-> These rules apply to **every** AI coding assistant operating in this repository
-> (GitHub Copilot, Codex, Claude Code, etc.). Follow them unconditionally.
+You are assisting with a real-time sports analytics platform. Follow these rules **strictly** at all times.
 
----
+## Core Principles
 
-## 1. Type Safety — Never Hallucinate API Shapes
+1. **Never Guess or Hallucinate API Shapes**
+   - Always import types from `src/types/sports/`.
+   - Use `LiveSportState`, `BaseballState`, `BasketballState`, and related discriminated unions.
+   - Never inline raw API response shapes. Reference exported types only.
 
-- **Always** import data types from `src/types/sports/` before writing any
-  code that consumes or produces sports state.
-- **Never** invent inline object shapes for game state, events, or API
-  responses. If a type does not exist, add it to `src/types/sports/index.ts`
-  and import it.
-- Payload types coming from external APIs (MLB Stats API, NBA API, ESPN, etc.)
-  must be wrapped in the canonical discriminated unions defined in
-  `src/types/sports/index.ts` before they reach any UI or business logic.
-- Do **not** use `any`, `unknown` (unless narrowing immediately), or untyped
-  `JSON.parse` results without a branded type assertion or Zod/io-ts parse.
+2. **Live Sports as Rigid State Machines**
+   - All game state transitions must be deterministic and pure.
+   - Use explicit state machines with discriminated unions (`type: 'MLB' | 'NBA'`).
+   - Handle transitions precisely (e.g., inning advance only when `outs === 3`, quarter advance only on `timeRemaining <= 0`).
+   - Do not use loose objects or `any`. Enforce exhaustive type checking.
 
-```ts
-// ✅ correct
-import type { LiveSportState, BaseballState } from '../types/sports/index.js';
+3. **UI Data Discipline**
+   - Never dump raw verbose API payloads into components or UI state.
+   - Transform all external data into compressed, discriminated unions defined in `src/types/sports/`.
+   - Prefer small, focused state slices over large nested objects.
 
-// ❌ wrong — shapes invented inline
-const state = { balls: 0, strikes: 0, outs: 0 };
-```
+4. **Architecture Guardrails**
+   - All state updates must go through pure transition functions in `src/machines/`.
+   - Frontend should subscribe to WebSocket streams or use reactive stores fed by processed state.
+   - Keep business logic out of React components, Vue components, or UI layers.
 
----
+5. **Type Safety Requirements**
+   - Use TypeScript `strict: true`, `exactOptionalPropertyTypes`, and `noUncheckedIndexedAccess`.
+   - Exhaustively handle every discriminated union variant with `switch` or `if` guards.
+   - Never use `as any`, `// @ts-ignore`, or force casts unless absolutely necessary (and document why).
 
-## 2. Live Sports Are Rigid State Machines
+6. **Performance & Real-time Considerations**
+   - Assume high-frequency updates (multiple per second).
+   - Favor immutable updates and structural sharing where possible.
+   - Avoid deep cloning large objects on every tick.
 
-- Model every in-game transition as a **pure function** that accepts
-  `(currentState: LiveSportState, event: GameEvent)` and returns a new
-  `LiveSportState`. No mutations; no side effects.
-- State machine logic lives exclusively in `src/machines/`. Do not embed
-  transition rules in UI components, hooks, or utilities.
-- Transitions must be **exhaustive**: use a `switch` or discriminated-union
-  narrowing so the TypeScript compiler rejects unhandled event types.
-- **Inning-flip rule (baseball):** when a batter records an out and the
-  resulting `outs` count equals `3`, the half-inning must flip and the bases
-  must be cleared before the function returns. This must be encoded in
-  `processBaseballEvent` in `src/machines/evaluator.ts`.
-- **Shot-clock rule (basketball):** a possession change resets the shot clock
-  to `24` (NBA) or `30` (NCAA); hardcode neither — derive from
-  `BasketballState.rules.shotClockSeconds`.
-- Always use `===` for state comparisons; never use loose equality (`==`).
+When generating code:
+- Start by importing required types from `src/types/sports`.
+- Implement pure functions for state transitions.
+- Keep UI layers thin and presentational.
+- Include comprehensive JSDoc and inline comments for complex rules.
 
-```ts
-// ✅ correct — transition encoded in evaluator, not in a component
-import { processBaseballEvent } from '../machines/evaluator.js';
-const next = processBaseballEvent(current, { type: 'STRIKEOUT' });
-
-// ❌ wrong — transition logic leaking into a React component
-if (outs >= 3) { setBases({}); setHalf(half === 'top' ? 'bottom' : 'top'); }
-```
-
----
-
-## 3. No Raw Verbose Payloads in the UI
-
-- The UI layer (components, hooks, pages) must **only** receive compressed,
-  discriminated `LiveSportState` objects — never raw vendor API JSON.
-- Strip all fields not present in `LiveSportState` at the ingestion boundary
-  (API route, WebSocket message handler, or server action).
-- When rendering, branch on the `type` discriminator (`'MLB' | 'NBA'`) using
-  a `switch` or conditional so TypeScript narrows the type automatically.
-- For streaming data, consume the WebSocket mock server in
-  `scripts/mock-stream.ts` during local development; do **not** hard-code
-  vendor API responses in component files.
-
-```ts
-// ✅ correct — narrow on discriminator before rendering
-switch (state.type) {
-  case 'MLB': return <BaseballScoreboard state={state} />;
-  case 'NBA': return <BasketballScoreboard state={state} />;
-  default: return assertNever(state);
-}
-
-// ❌ wrong — raw API blob passed directly to a component
-<Scoreboard data={rawEspnApiResponse} />
-```
-
----
-
-## 4. Module & Import Conventions
-
-- Use **`.js` extensions** on all relative TypeScript imports (Node16 module
-  resolution requires it even for `.ts` source files).
-- Path alias `@sports-plugins/*` maps to `./src/*` — use it for cross-module
-  imports within `src/`.
-- Keep each sport's logic self-contained: `MLB` concerns stay in files that
-  import `BaseballState`; `NBA` concerns stay in files that import
-  `BasketballState`.
-
----
-
-## 5. General Code Quality
-
-- All new code must pass `npm run typecheck` (`tsc --noEmit`) with zero errors.
-- Do not disable ESLint rules inline (`// eslint-disable`) without a comment
-  explaining why.
-- Prefer `readonly` arrays and `Readonly<T>` objects in state machine types to
-  prevent accidental mutation.
-- Document every exported type and function with a JSDoc comment explaining
-  its invariants.
+This file takes precedence over any conflicting instructions.
