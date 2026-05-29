@@ -1,0 +1,13 @@
+{
+  "yahoo-fantasy-baseball": {
+    "type": "stdio",
+    "command": "node",
+    "args": ["path/to/yahoo-fantasy-baseball-MCP/build/index.js"],
+    "description": "Yahoo Fantasy Baseball MCP server (requires local clone/build and Yahoo OAuth env vars)",
+    "env": {
+      "YAHOO_CLIENT_ID": "${YAHOO_CLIENT_ID}",
+      "YAHOO_CLIENT_SECRET": "${YAHOO_CLIENT_SECRET}",
+      "YAHOO_ACCESS_TOKEN": "${YAHOO_ACCESS_TOKEN}"
+    }
+  }
+}

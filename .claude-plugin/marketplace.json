@@ -91,6 +91,27 @@
       "description": "Blaze Sports Intel (BSI) integration — college baseball box scores, Texas Longhorns intel, and advanced analytics via blazesportsintel.com MCP",
       "homepage": "https://blazesportsintel.com",
       "categories": ["sabermetrics", "college-sports", "analytics"]
+    },
+    {
+      "name": "sportscore-mcp",
+      "path": "external_plugins/sportscore-mcp",
+      "description": "SportScore MCP integration for free live scores, match details, standings, and player stats across football, basketball, cricket, and tennis",
+      "homepage": "https://github.com/Backspace-me/sportscore-mcp",
+      "categories": ["live-scores", "analytics"]
+    },
+    {
+      "name": "mcp-sports-hub",
+      "path": "external_plugins/mcp-sports-hub",
+      "description": "Unified sports MCP integration aggregating provider namespaces for scores, stats, odds, NCAA data, and multi-sport research workflows",
+      "homepage": "https://github.com/lacausecrypto/mcp-sports-hub",
+      "categories": ["analytics", "live-scores", "college-sports"]
+    },
+    {
+      "name": "yahoo-fantasy-baseball-mcp",
+      "path": "external_plugins/yahoo-fantasy-baseball-mcp",
+      "description": "Yahoo Fantasy Baseball MCP integration for roster-aware fantasy workflows via Yahoo OAuth-authenticated API access",
+      "homepage": "https://github.com/jimbrig/yahoo-fantasy-baseball-mcp",
+      "categories": ["fantasy-sports", "analytics"]
     }
   ]
 }

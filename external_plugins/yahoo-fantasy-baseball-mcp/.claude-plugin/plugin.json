@@ -1,0 +1,11 @@
+{
+  "name": "yahoo-fantasy-baseball-mcp",
+  "description": "Yahoo Fantasy Baseball MCP integration for roster retrieval and fantasy team workflow support",
+  "version": "1.0.0",
+  "author": {
+    "name": "Jim Brigman",
+    "url": "https://github.com/jimbrig"
+  },
+  "homepage": "https://developer.yahoo.com/fantasysports/guide/",
+  "repository": "https://github.com/jimbrig/yahoo-fantasy-baseball-mcp"
+}
