@@ -153,6 +153,26 @@ export interface PlayerPitchingProfile extends Player {
 }
 
 /* ------------------------------------------------------------------ */
+/*  Team Analytics                                                    */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Aggregate team stats used by the analyze_matchup tool.
+ *
+ * `offense` holds the team's collective batting line (aggregated across
+ * all hitters) and `pitching` holds the team's aggregate pitching line.
+ * `parkFactor` and `sosFactor` are applied when computing adjusted metrics.
+ */
+export interface TeamStats {
+  offense: BattingLine;
+  pitching: PitchingLine;
+  /** Park factor for the home ballpark (1.0 = neutral). */
+  parkFactor: number;
+  /** Strength-of-schedule factor (1.0 = average schedule). */
+  sosFactor: number;
+}
+
+/* ------------------------------------------------------------------ */
 /*  Team / Standings                                                  */
 /* ------------------------------------------------------------------ */
 

@@ -90,6 +90,22 @@
           },
           "required": ["metric", "stats"]
         }
+      },
+      {
+        "name": "analyze_matchup",
+        "description": "Compute head-to-head win probability for two college baseball teams using park- and SoS-adjusted sabermetrics (wRC+, FIP) with log5 and optional Bayesian shrinkage. Results are KV-cached for 5 minutes; session state is persisted in D1.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "team1_id": { "type": "string", "description": "BSI identifier for the first team (e.g. 'texas')" },
+            "team2_id": { "type": "string", "description": "BSI identifier for the second team (e.g. 'tcu')" },
+            "date": { "type": "string", "description": "Game date (YYYY-MM-DD). Omit for current-season averages." },
+            "use_bayesian": { "type": "boolean", "description": "Apply Bayesian shrinkage to the win probability (default: true)" },
+            "session_id": { "type": "string", "description": "Optional session identifier for multi-turn D1 state (e.g. userId + conversationId)" },
+            "sample_size_threshold": { "type": "integer", "description": "Minimum plate appearances / innings pitched before trusting a metric (default: 100)" }
+          },
+          "required": ["team1_id", "team2_id"]
+        }
       }
     ]
   }

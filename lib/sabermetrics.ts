@@ -154,6 +154,37 @@ export function computeBattingAdvanced(line: BattingLine, parkFactor = 1.0): Bat
   };
 }
 
+/**
+ * Park- and strength-of-schedule-adjusted wRC+.
+ *
+ * A sosFactor > 1 means the team faced tougher-than-average competition
+ * (their output is more impressive, so the metric is scaled up accordingly).
+ */
+export function computeWRCPlus(
+  line: BattingLine,
+  parkFactor = 1.0,
+  sosFactor = 1.0,
+): number {
+  return wRCPlus(line, parkFactor) * sosFactor;
+}
+
+/**
+ * Park- and strength-of-schedule-adjusted FIP.
+ *
+ * A sosFactor > 1 means the pitcher faced tougher-than-average offenses,
+ * which tends to inflate raw FIP. Dividing by sosFactor gives credit for
+ * the quality of opposition faced.
+ */
+export function computeFIP(
+  line: PitchingLine,
+  parkFactor = 1.0,
+  sosFactor = 1.0,
+): number {
+  // Park adjustment: pitcher-friendly parks (PF < 1) lower FIP, hitter-friendly raise it.
+  const parkAdjustedFIP = fip(line) / Math.max(parkFactor, 0.01);
+  return parkAdjustedFIP / Math.max(sosFactor, 0.01);
+}
+
 /* ------------------------------------------------------------------ */
 /*  Pitching metrics                                                  */
 /* ------------------------------------------------------------------ */

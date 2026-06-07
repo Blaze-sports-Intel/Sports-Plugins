@@ -1,0 +1,30 @@
+# wrangler.toml — Cloudflare Workers configuration for the BSI MCP Worker
+#
+# Before deploying:
+#   1. wrangler kv:namespace create BSI_CACHE_KV
+#      → replace "your-kv-namespace-id" below with the returned id
+#   2. wrangler d1 create bsi-agent-state
+#      → replace "your-d1-database-id" below with the returned database_id
+#   3. wrangler deploy
+
+name = "bsi-mcp-worker"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+[[kv_namespaces]]
+binding = "BSI_CACHE_KV"
+id = "your-kv-namespace-id"
+
+# Preview namespace for local development / wrangler dev
+# Create with: wrangler kv:namespace create BSI_CACHE_KV --preview
+preview_id = "your-kv-preview-namespace-id"
+
+[[d1_databases]]
+binding = "BSI_STATE_D1"
+database_name = "bsi-agent-state"
+database_id = "your-d1-database-id"
+
+[vars]
+# Non-secret environment variables (add secrets via `wrangler secret put`)
+ENVIRONMENT = "production"
